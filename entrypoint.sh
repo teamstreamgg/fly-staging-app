@@ -34,11 +34,17 @@ if [ "$EVENT_TYPE" = "closed" ]; then
   exit 0
 fi
 
-# Deploy the Fly app, creating it first if needed.
+# Create the app first if needed.
 if ! flyctl status --app "$app"; then
-  flyctl launch --now --copy-config --name "$app" --image "$image" --region "$region" --org "$org"
-elif [ "$INPUT_UPDATE" != "false" ]; then
-  flyctl deploy --app "$app" --region "$region" --image "$image" --region "$region" --strategy immediate
+  flyctl launch --no-deploy --copy-config --name "$app" --image "$image" --region "$region" --org "$org"
+fi
+# Set/update secrets
+if [ -n "$INPUT_SECRETS" ]; then
+  flyctl secrets set secrets $INPUT_SECRETS
+fi
+# Deploy the app
+if [ "$INPUT_UPDATE" != "false" ]; then
+  flyctl deploy --app "$app" --region "$region" --image "$image" --region "$region" --strategy immediate $INPUT_DEPLOYARGS
 fi
 
 # Attach postgres cluster to the app if specified.

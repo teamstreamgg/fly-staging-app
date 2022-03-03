@@ -10,6 +10,10 @@ runs:
 inputs:
   name:
     description: Fly app name
+  deployargs:
+    description: Provide additional deploy arguments
+  secrets:
+    description: Set secrets before deplying the app
   image:
     description: Optional pre-existing Docker image to use
   region:
