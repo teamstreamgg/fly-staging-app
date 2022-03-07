@@ -40,11 +40,11 @@ if ! flyctl status --app "$app"; then
 fi
 # Set/update secrets
 if [ -n "$INPUT_SECRETS" ]; then
-  flyctl secrets set --app "$app" secrets "${INPUT_SECRETS[@]}"
+  flyctl secrets set --app "$app" secrets "$INPUT_SECRETS"
 fi
 # Deploy the app
 if [ "$INPUT_UPDATE" != "false" ]; then
-  flyctl deploy --app "$app" --region "$region" --image "$image" --region "$region" --strategy immediate $INPUT_DEPLOYARGS
+  flyctl deploy --app "$app" --region "$region" --image "$image" --region "$region" --strategy immediate --remote-only $INPUT_DEPLOYARGS
 fi
 
 # Attach postgres cluster to the app if specified.
