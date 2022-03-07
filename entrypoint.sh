@@ -36,7 +36,7 @@ fi
 
 # Create the app first if needed.
 if ! flyctl status --app "$app"; then
-  flyctl launch --no-deploy --copy-config --name "$app" --image "$image" --region "$region" --org "$org"
+  flyctl launch --dockerfile ./Dockerfile --no-deploy --copy-config --name "$app" --image "$image" --region "$region" --org "$org"
 fi
 # Set/update secrets
 if [ -n "$INPUT_SECRETS" ]; then
