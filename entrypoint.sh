@@ -40,7 +40,7 @@ if ! flyctl status --app "$app"; then
 fi
 # Set/update secrets
 if [ -n "$INPUT_SECRETS" ]; then
-  flyctl secrets --app set "$app" secrets $INPUT_SECRETS
+  flyctl secrets --app "$app" set secrets $INPUT_SECRETS
 fi
 # Deploy the app
 if [ "$INPUT_UPDATE" != "false" ]; then
