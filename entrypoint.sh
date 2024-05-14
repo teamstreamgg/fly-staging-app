@@ -36,7 +36,7 @@ fi
 
 # Create the app first if needed.
 if ! flyctl status --app "$app"; then
-  flyctl launch --dockerfile ./Dockerfile --no-deploy --copy-config --name "$app" --image "$image" --region "$region" --org "$org"
+  flyctl launch --dockerfile ./Dockerfile --no-deploy --copy-config --name "$app" --image "$image" --regions "$region" --org "$org"
   # Set secrets before first deploy
   if [ -n "$INPUT_SECRETS" ]; then
     flyctl secrets --app "$app" set $INPUT_SECRETS
@@ -49,7 +49,7 @@ fi
 
 # Deploy the app
 if [ "$INPUT_UPDATE" != "false" ]; then
-  flyctl deploy --app "$app" --region "$region" --image "$image" --region "$region" --strategy immediate --remote-only $INPUT_DEPLOYARGS
+  flyctl deploy --app "$app" --regions "$region" --image "$image" --regions "$region" --strategy immediate --remote-only $INPUT_DEPLOYARGS
 fi
 
 # Attach postgres cluster to the app if specified.
